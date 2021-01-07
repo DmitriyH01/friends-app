@@ -1,0 +1,160 @@
+h1 {
+  margin: 0;
+}
+
+body {
+  width: 100%;
+  height: 100vh;
+  max-width: 1920px;
+  margin: 0px;
+}
+
+.top {
+  box-sizing: border-box;
+  padding: 10px;
+  height: 50px;
+  text-align: center;
+  text-transform: capitalize;
+  background-color: #dfe5ecf6;
+}
+
+.main {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  height: calc(100vh - 50px - 100px);
+  padding: 10px;
+  background-color: #a6c0d6fb;
+}
+
+.container {
+  position: relative;
+  width: 70%;
+  background-color: #7990bfd7;
+}
+
+.list {
+  position: absolute;
+  display: grid;
+  grid-template-columns: 230px 230px 230px 230px;
+  height: calc(100vh - 100px - 100px);
+  /* margin-block-start: 0;
+  margin-block-end: 0;
+  padding-inline-start: 0px;
+  align-items: center; */
+  list-style-type: none;
+  overflow-y: auto;
+  cursor: pointer;
+}
+.list::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.userCard {
+  width: 215px;
+  height: 215px;
+  display: grid;
+  margin: 5px;
+  border-radius: 10px;
+  border: solid;
+  border-color: rgb(103, 103, 135);
+  text-align: center;
+  background-color: white;
+}
+
+.name {
+  font-size: large;
+  justify-self: center;
+}
+
+.userCard img {
+  justify-self: center;
+}
+
+.filters_box {
+  position: relative;
+  padding: 10px;
+  width: 30%;
+  background-color: #918da7d7;
+}
+
+.filters {
+  width: 300px;
+  height: auto;
+  border: groove;
+  border-color: #8a6742d7;
+  padding: 10px;
+  margin: 0 auto;
+}
+
+.searcher {
+  width: 270px;
+  height: 30px;
+  margin-left: 10px;
+}
+
+.sort-users {
+  position: relative;
+  display: grid;
+  margin: 10px;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+}
+
+.filter-btn {
+  width: 130px;
+  height: 35px;
+  margin-left: 2px;
+}
+
+.selection-box {
+  display: grid;
+  height: 200px;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.selection-box strong {
+  font-size: large;
+}
+
+.sorted_btn {
+  height: 55px;
+  border: solid;
+  text-align: center;
+}
+
+.checkbox_input {
+  -webkit-appearance: none;
+}
+
+/* input:checked + span {
+  font-weight: bolder;
+} */
+
+.checkbox_input:active + span {
+  font-weight: bolder;
+  color: blue;
+}
+
+.reset button {
+  margin-left: 90px;
+}
+
+.unselected-text {
+  -webkit-user-select: none;
+}
+
+.button_name {
+  display: block;
+  font-size: 18px;
+}
+
+.bottom {
+  box-sizing: border-box;
+  height: 100px;
+  padding: 10px;
+  background-color: #697a98d7;
+  text-align: center;
+}
