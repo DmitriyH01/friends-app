@@ -129,7 +129,8 @@ FEMALE_BUTTON_FILTER.addEventListener("click", (elem) => {
   const filterFemale = ALL_USERS_CARDS_FILTERS.filter(
     (elem) => elem.gender === "female"
   );
-  search(filterFemale);
+  resetCards();
+  createUsersCards(filterFemale);
 });
 
 SEARCH_INPUT.addEventListener("keydown", () => {
