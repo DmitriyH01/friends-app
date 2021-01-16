@@ -12,8 +12,8 @@ const ABC_BUTTON_FILTER = document.getElementById("Abc");
 const ZYX_BUTTON_FILTER = document.getElementById("Zyx");
 const MALE_BUTTON_FILTER = document.getElementById("male");
 const FEMALE_BUTTON_FILTER = document.getElementById("female");
-const JUNIOR_FILTER_BUTTON = document.getElementById("young-ftr");
-const SENIOR_FILTER_BUTTON = document.getElementById("older-ftr");
+const JUNIOR_FILTER_BUTTON = document.getElementById("junior-ftr");
+const SENIOR_FILTER_BUTTON = document.getElementById("senior-ftr");
 const RESET_BUTTON = document.getElementById("reset");
 const SEARCH_INPUT = document.querySelector(".searcher");
 
@@ -104,13 +104,18 @@ function sortByZYX() {
 
 JUNIOR_FILTER_BUTTON.addEventListener("click", () => {
   const younger = ALL_USERS_CARDS_FILTERS.sort((a, b) => a.dob.age - b.dob.age);
-  search(younger);
+  searchByAge(younger);
 });
 
 SENIOR_FILTER_BUTTON.addEventListener("click", () => {
   const older = ALL_USERS_CARDS_FILTERS.sort((a, b) => b.dob.age - a.dob.age);
-  search(older);
+  searchByAge(older);
 });
+
+function searchByAge(users) {
+  resetCards();
+  createUsersCards(users);
+}
 
 MALE_BUTTON_FILTER.addEventListener("click", (elem) => {
   const filterMale = ALL_USERS_CARDS_FILTERS.filter(
