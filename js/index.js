@@ -134,18 +134,17 @@ FEMALE_BUTTON_FILTER.addEventListener("click", (elem) => {
 });
 
 SEARCH_INPUT.addEventListener("keydown", () => {
-  search(searcher.value);
+  search(ALL_USERS_CARDS_FILTERS);
 });
 
 RESET_BUTTON.addEventListener("click", () => {
-  USERS_LIST.innerHTML = "";
+  resetCards();
   createUsersCards(ALL_USERS_CARDS);
-  searcher.value = "";
 });
 
 function search(people) {
-  USERS_LIST.innerHTML = "";
-  const search = searcher.value.toLowerCase();
+  resetCards();
+  const search = SEARCH_INPUT.value.toLowerCase();
 
   people = people.filter(
     (elem) =>
