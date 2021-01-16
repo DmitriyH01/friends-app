@@ -112,14 +112,15 @@ SENIOR_FILTER_BUTTON.addEventListener("click", () => {
   search(older);
 });
 
-male.addEventListener("click", (elem) => {
+MALE_BUTTON_FILTER.addEventListener("click", (elem) => {
   const filterMale = ALL_USERS_CARDS_FILTERS.filter(
     (elem) => elem.gender === "male"
   );
-  search(filterMale);
+  resetCards();
+  createUsersCards(filterMale);
 });
 
-female.addEventListener("click", (elem) => {
+FEMALE_BUTTON_FILTER.addEventListener("click", (elem) => {
   const filterFemale = ALL_USERS_CARDS_FILTERS.filter(
     (elem) => elem.gender === "female"
   );
