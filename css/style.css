@@ -29,7 +29,7 @@ body {
 
 .container {
   position: relative;
-  width: 70%;
+  width: 65%;
   background-color: #7990bfd7;
 }
 
@@ -75,7 +75,7 @@ body {
 .filters_box {
   position: relative;
   padding: 10px;
-  width: 30%;
+  width: 35%;
   background-color: #918da7d7;
 }
 
@@ -157,4 +157,40 @@ body {
   padding: 10px;
   background-color: #697a98d7;
   text-align: center;
+}
+
+@media only screen and (min-width: 1160px) and (max-width: 1400px) {
+  .list {
+    display: grid;
+    grid-template-columns: 230px 230px 230px;
+  }
+}
+
+@media only screen and (min-width: 950px) and (max-width: 1160px) {
+  .list {
+    display: grid;
+    grid-template-columns: 230px 230px;
+  }
+
+  .filters_box {
+    width: 45%;
+  }
+
+  .container {
+    width: 55%;
+  }
+}
+
+@media only screen and (min-width: 635px) and (max-width: 950px) {
+  .list {
+    display: grid;
+    grid-template-columns: 230px;
+  }
+  .filters_box {
+    width: 55%;
+  }
+
+  .container {
+    width: 45%;
+  }
 }
