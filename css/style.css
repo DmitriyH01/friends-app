@@ -35,7 +35,7 @@ body {
 .list {
   position: absolute;
   display: grid;
-  grid-template-columns: 230px 230px 230px 230px;
+  grid-template-columns: repeat(4, 230px);
   height: calc(100vh - 100px - 100px);
   /* margin-block-start: 0;
   margin-block-end: 0;
@@ -98,7 +98,6 @@ body {
 .filters_list {
   display: grid;
   width: 300px;
-  height: calc(100vh - 70px - 100px);
   list-style-type: none;
   height: auto;
   border: groove;
@@ -188,17 +187,17 @@ body {
 @media only screen and (min-width: 1160px) and (max-width: 1510px) {
   .list {
     display: grid;
-    grid-template-columns: 230px 230px 230px;
+    grid-template-columns: repeat(3, 230px);
   }
 }
 
 @media only screen and (min-width: 950px) and (max-width: 1160px) {
   .list {
     display: grid;
-    grid-template-columns: 230px 230px;
+    grid-template-columns: repeat(2, 230px);
   }
 
-  .filters_box {
+  .sidebar {
     width: 45%;
   }
 
@@ -212,7 +211,7 @@ body {
     display: grid;
     grid-template-columns: 230px;
   }
-  .filters_box {
+  .sidebar {
     width: 55%;
   }
 
