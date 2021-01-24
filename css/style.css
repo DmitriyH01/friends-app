@@ -18,11 +18,10 @@ body {
   background-color: #dfe5ecf6;
 }
 
-.main {
-  box-sizing: border-box;
+.main_window {
   display: flex;
   flex-direction: row;
-  height: calc(100vh - 50px - 100px);
+  height: calc(100vh - 70px - 100px);
   padding: 10px;
   background-color: #a6c0d6fb;
 }
@@ -57,8 +56,10 @@ body {
   display: grid;
   margin: 5px;
   border-radius: 10px;
-  border: solid;
-  border-color: rgb(103, 103, 135);
+  border: 2px solid transparent;
+  /* border-width: 5px; */
+  /* border-color: rgb(103, 103, 135); */
+  /* border-color: transparent; */
   text-align: center;
   background-color: white;
 }
@@ -72,20 +73,33 @@ body {
   justify-self: center;
 }
 
-.filters_box {
+.userCard:hover {
+  width: 215px;
+  height: 215px;
+  transition: background-color 0.7s, color 0.7s;
+  transform: 2s;
+  border: 2px solid rgb(103, 103, 135);
+  background-color: rgb(168, 168, 181);
+  color: white;
+}
+
+.filters {
+  display: flex;
   position: relative;
+  justify-content: center;
   padding: 10px;
   width: 35%;
   background-color: #918da7d7;
 }
 
-.filters {
+.filters_box {
+  position: absolute;
   width: 300px;
+  height: calc(100vh - 70px - 100px);
   height: auto;
   border: groove;
   border-color: #8a6742d7;
   padding: 10px;
-  margin: 0 auto;
 }
 
 .searcher {
@@ -108,6 +122,10 @@ body {
   margin-left: 2px;
 }
 
+.filter-btn:focus {
+  border: grey solid;
+}
+
 .selection-box {
   display: grid;
   height: 200px;
@@ -123,6 +141,10 @@ body {
   height: 55px;
   border: solid;
   text-align: center;
+}
+
+.sorted_btn:focus {
+  border: grey solid;
 }
 
 .checkbox_input {
@@ -159,7 +181,7 @@ body {
   text-align: center;
 }
 
-@media only screen and (min-width: 1160px) and (max-width: 1400px) {
+@media only screen and (min-width: 1160px) and (max-width: 1510px) {
   .list {
     display: grid;
     grid-template-columns: 230px 230px 230px;
@@ -192,5 +214,10 @@ body {
 
   .container {
     width: 45%;
+  }
+}
+
+@media only screen and (min-width: 300px) and (max-width: 635px) {
+  .list {
   }
 }

@@ -1,7 +1,7 @@
 const allFriends = {
   currentList: [],
   changeList: [],
-  numberOfFriends: 52,
+  numberOfFriends: 72,
 };
 
 const REQUEST_URL = "https://randomuser.me/api/1.3/";
