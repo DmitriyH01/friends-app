@@ -21,35 +21,36 @@
         <ul class="list" id="usersList"></ul>
       </div>
 
-      <aside class="filters">
-        <nav id="filters_menu" class="filters_box">
-          <div class="search">
-            <form action="" method="get">
-              <input
-                type="text"
-                name="search"
-                class="searcher"
-                placeholder="Find..."
-              />
-            </form>
-          </div>
-          <div class="sort-users">
-            <button id="Abc" class="filter-btn">Abc</button>
-            <button id="Zyx" class="filter-btn">Zyx</button>
-          </div>
-          <div class="selection-box">
-            <strong class="unselected-text">Gender :</strong>
-            <label class="sorted_btn">
-              <input id="male" class="checkbox_input" type="checkbox" />
-              <span class="unselected-text button_name">Male</span>
-            </label>
-            <label class="sorted_btn">
-              <input id="female" class="checkbox_input" type="checkbox" />
-              <span class="unselected-text button_name">Female</span>
-            </label>
-          </div>
-          <div class="selection-box">
-            <strong class="unselected-text">Age :</strong>
+      <aside class="sidebar">
+        <nav class="content">
+          <ul id="filters_menu" class="filters_list">
+            <li class="search">
+              <form action="" method="get">
+                <input
+                  type="text"
+                  name="search"
+                  class="searcher"
+                  placeholder="Find..."
+                />
+              </form>
+            </li>
+            <li class="sort_usersByAlphabet">
+              <button id="Abc" class="filter-btn">Abc</button>
+              <button id="Zyx" class="filter-btn">Zyx</button>
+            </li>
+            <li class="selection-box">
+              <strong class="unselected-text">Gender :</strong>
+              <label class="sorted_btn">
+                <input id="male" class="checkbox_input" type="checkbox" />
+                <span class="unselected-text button_name">Male</span>
+              </label>
+              <label class="sorted_btn">
+                <input id="female" class="checkbox_input" type="checkbox" />
+                <span class="unselected-text button_name">Female</span>
+              </label>
+            </li>
+            <li class=selection-box">
+              <strong class="unselected-text">Age :</strong>
             <label class="sorted_btn">
               <input
                 id="younger-ftr"
@@ -68,10 +69,11 @@
               />
               <span class="unselected-text button_name">Older first</span>
             </label>
-          </div>
-          <div class="reset">
-            <button class="filter-btn" id="reset">Reset Filters</button>
-          </div>
+            </li>
+            <li class="reset_btn">
+              <button class="filter-btn" id="reset">Reset Filters</button>
+            </li>
+          </ul>
         </nav>
       </aside>
     </main>

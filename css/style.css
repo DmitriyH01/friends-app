@@ -83,19 +83,23 @@ body {
   color: white;
 }
 
-.filters {
+.sidebar {
   display: flex;
-  position: relative;
   justify-content: center;
   padding: 10px;
   width: 35%;
   background-color: #918da7d7;
 }
 
-.filters_box {
-  position: absolute;
+.content {
+  display: flex;
+}
+
+.filters_list {
+  display: grid;
   width: 300px;
   height: calc(100vh - 70px - 100px);
+  list-style-type: none;
   height: auto;
   border: groove;
   border-color: #8a6742d7;
@@ -108,7 +112,7 @@ body {
   margin-left: 10px;
 }
 
-.sort-users {
+.sort_usersByAlphabet {
   position: relative;
   display: grid;
   margin: 10px;
@@ -160,7 +164,7 @@ body {
   color: blue;
 }
 
-.reset button {
+.reset_btn button {
   margin-left: 90px;
 }
 
