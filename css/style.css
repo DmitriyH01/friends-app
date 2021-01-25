@@ -15,7 +15,7 @@ body {
   height: 50px;
   text-align: center;
   text-transform: capitalize;
-  background-color: #dfe5ecf6;
+  background: linear-gradient(90deg, #69b7eb, #b3dbd3, #f4d6db);
 }
 
 .main_window {
@@ -23,13 +23,13 @@ body {
   flex-direction: row;
   height: calc(100vh - 70px - 100px);
   padding: 10px;
-  background-color: #a6c0d6fb;
+  background: linear-gradient(90deg, #cfecd0, #ffc5ca);
 }
 
 .container {
   position: relative;
   width: 75%;
-  background-color: #7990bfd7;
+  background: linear-gradient(90deg, #b9deed, #efefef);
 }
 
 .sidebar {
@@ -65,7 +65,6 @@ body {
   border: 2px solid transparent;
   text-align: center;
   background-color: white;
-  /* box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.65); */
 }
 
 .name {
@@ -81,8 +80,11 @@ body {
 .userCard:hover {
   transition: background-color 0.7s, color 0.7s;
   border: 2px solid rgb(103, 103, 135);
-  background-color: rgb(168, 168, 181);
-  color: white;
+  background-blend-mode: screen;
+  background: linear-gradient(limegreen, transparent),
+    linear-gradient(90deg, skyblue, transparent),
+    linear-gradient(-90deg, coral, transparent);
+  color: rgb(255, 255, 255);
 }
 
 .wrapper {
@@ -118,7 +120,7 @@ body {
   padding: 15px 15px;
   margin: 5px 5px;
   position: relative;
-  color: white;
+  color: rgb(255, 255, 255);
   border: 1.5px solid rgba(255, 255, 255, 0.4);
   background: none;
   font-weight: 300;
@@ -202,11 +204,18 @@ body {
   box-sizing: border-box;
   height: 100px;
   padding: 10px;
-  background-color: #697a98d7;
+  background: linear-gradient(90deg, #aea4e3, #d3ffe8);
   text-align: center;
 }
 
 @media only screen and (min-width: 1080px) and (max-width: 1510px) {
+  .sidebar {
+    width: 30%;
+  }
+
+  .container {
+    width: 70%;
+  }
   .list {
     grid-template-columns: repeat(3, 230px);
   }
@@ -238,7 +247,6 @@ body {
   .list {
     grid-template-columns: 230px;
   }
-
 }
 
 @media only screen and (min-width: 460px) and (max-width: 635px) {
