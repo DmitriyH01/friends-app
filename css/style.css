@@ -24,7 +24,6 @@ body {
   height: calc(100vh - 70px - 100px);
   padding: 10px;
   background: white;
-  /* background: linear-gradient(90deg, #cfecd0, #ffc5ca); */
 }
 
 .container {
@@ -91,6 +90,7 @@ body {
 .wrapper {
   display: flex;
   width: 100%;
+  max-height: 600px;
 }
 
 .filters_list {
@@ -229,8 +229,9 @@ body {
   color: blue;
 }
 
-.reset_btn button {
-  margin-left: 90px;
+.reset_btn {
+  display: flex;
+  justify-self: center;
 }
 
 .button_name {
@@ -259,7 +260,7 @@ body {
   }
 }
 
-@media only screen and (min-width: 850px) and (max-width: 1080px) {
+@media only screen and (min-width: 870px) and (max-width: 1080px) {
   .list {
     grid-template-columns: repeat(2, 230px);
   }
@@ -273,7 +274,7 @@ body {
   }
 }
 
-@media only screen and (min-width: 635px) and (max-width: 850px) {
+@media only screen and (min-width: 635px) and (max-width: 870px) {
   .sidebar {
     width: 50%;
   }
@@ -287,7 +288,7 @@ body {
   }
 }
 
-@media only screen and (min-width: 460px) and (max-width: 635px) {
+@media only screen and (min-width: 425px) and (max-width: 635px) {
   .main_window {
     flex-direction: column;
     align-items: center;
