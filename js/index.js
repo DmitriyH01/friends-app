@@ -1,12 +1,12 @@
-const allFriends = {
-  currentList: [],
-  changeList: [],
-  numberOfFriends: 72,
+const friendsList = {
+  current: [],
+  changed: [],
+  count: 72,
 };
 
 const REQUEST_URL = "https://randomuser.me/api/1.3/";
-const ALL_USERS_CARDS_FILTERS = allFriends.changeList;
-const ALL_USERS_CARDS = allFriends.currentList;
+const ALL_USERS_CARDS_FILTERS = friendsList.changed;
+const ALL_USERS_CARDS = friendsList.current;
 const USERS_LIST = document.getElementById("usersList");
 const FILTERS_MENU = document.getElementById("filters_menu");
 const ABC_BUTTON_FILTER = document.getElementById("Abc");
@@ -19,25 +19,24 @@ const RESET_BUTTON = document.getElementById("reset");
 const SEARCH_INPUT = document.querySelector(".searcher");
 
 function initApp() {
-  getUsers();
+  getUsers().then((users) => {
+    saveUsers(users);
+    createUsersCards(ALL_USERS_CARDS);
+  });
 }
 
 initApp();
 
 function getUsers() {
-  const url = `${REQUEST_URL}?results=${allFriends.numberOfFriends}`;
-  fetch(url)
+  const url = `${REQUEST_URL}?results=${friendsList.count}`;
+
+  return fetch(url)
     .then((res) => {
       if (res.ok) {
         return res.json();
-      } else {
-        throw new Error("Что-то не так с сервером...");
       }
     })
-    .then((data) => {
-      saveUsers(data.results);
-      createUsersCards(ALL_USERS_CARDS);
-    })
+    .then((data) => data.results)
     .catch((err) => {
       console.error(err.message);
     });
@@ -69,31 +68,31 @@ function createUsersCards(users) {
 FILTERS_MENU.addEventListener("click", function ({ target }) {
   switch (target) {
     case ABC_BUTTON_FILTER:
-      sortingByABC();
+      sortByIncreaseAlphabet();
       break;
     case ZYX_BUTTON_FILTER:
-      sortingByZYX();
+      sortByDecreaseAlphabet();
       break;
     case YOUNGER_FILTER_BUTTON:
-      sortAscending();
+      sortAscend();
       break;
     case SENIOR_FILTER_BUTTON:
-      descendingSort();
+      descendSort();
       break;
     case MALE_BUTTON_FILTER:
-      sortingMaleOnly();
+      sortByMale();
       break;
     case FEMALE_BUTTON_FILTER:
-      sortingFemaleOnly();
+      sortByFemale();
       break;
     case RESET_BUTTON:
-      resettingFilters();
+      resetFilters();
       break;
   }
 });
 
-function sortingByABC() {
-  const abcSearch = ALL_USERS_CARDS_FILTERS.sort((a, b) => {
+function sortByIncreaseAlphabet() {
+  const increaseSearch = ALL_USERS_CARDS_FILTERS.sort((a, b) => {
     if (a.name.first > b.name.first) {
       return 1;
     }
@@ -104,11 +103,11 @@ function sortingByABC() {
   });
 
   resetCards();
-  createUsersCards(abcSearch);
+  createUsersCards(increaseSearch);
 }
 
-function sortingByZYX() {
-  const zyxSearch = ALL_USERS_CARDS_FILTERS.sort((a, b) => {
+function sortByDecreaseAlphabet() {
+  const decreaseSearch = ALL_USERS_CARDS_FILTERS.sort((a, b) => {
     if (a.name.first < b.name.first) {
       return 1;
     }
@@ -118,10 +117,10 @@ function sortingByZYX() {
     return 0;
   });
   resetCards();
-  createUsersCards(zyxSearch);
+  createUsersCards(decreaseSearch);
 }
 
-function sortAscending() {
+function sortAscend() {
   const youngers = ALL_USERS_CARDS_FILTERS.sort(
     (a, b) => a.dob.age - b.dob.age
   );
@@ -129,13 +128,13 @@ function sortAscending() {
   createUsersCards(youngers);
 }
 
-function descendingSort() {
+function descendSort() {
   const seniors = ALL_USERS_CARDS_FILTERS.sort((a, b) => b.dob.age - a.dob.age);
   resetCards();
   createUsersCards(seniors);
 }
 
-function sortingMaleOnly() {
+function sortByMale() {
   const filterMale = ALL_USERS_CARDS_FILTERS.filter(
     (elem) => elem.gender === "male"
   );
@@ -143,7 +142,7 @@ function sortingMaleOnly() {
   createUsersCards(filterMale);
 }
 
-function sortingFemaleOnly() {
+function sortByFemale() {
   const filterFemale = ALL_USERS_CARDS_FILTERS.filter(
     (elem) => elem.gender === "female"
   );
@@ -151,7 +150,7 @@ function sortingFemaleOnly() {
   createUsersCards(filterFemale);
 }
 
-function resettingFilters() {
+function resetFilters() {
   resetCards();
   createUsersCards(ALL_USERS_CARDS);
 }
@@ -164,12 +163,12 @@ function search(people) {
   resetCards();
   const search = SEARCH_INPUT.value.toLowerCase();
 
-  people = people.filter(
+  const newPeople = people.filter(
     (elem) =>
       elem.name.first.toLowerCase().match(search) ||
       elem.name.last.toLowerCase().match(search)
   );
-  createUsersCards(people);
+  createUsersCards(newPeople);
 }
 
 function resetCards() {
