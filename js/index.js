@@ -4,13 +4,12 @@ const friendsList = {
   count: 72,
 };
 
-const REQUEST_URL = "https://randomuser.me/api/1.3/";
 const ALL_USERS_CARDS_FILTERS = friendsList.changed;
 const ALL_USERS_CARDS = friendsList.current;
 const USERS_LIST = document.getElementById("usersList");
 const FILTERS_MENU = document.getElementById("filters_menu");
-const ABC_BUTTON_FILTER = document.getElementById("Abc");
-const ZYX_BUTTON_FILTER = document.getElementById("Zyx");
+const NAME_ASCEND_BUTTON_FILTER = document.getElementById("name-ascend");
+const NAME_DESCEND_BUTTON_FILTER = document.getElementById("name-descend");
 const MALE_BUTTON_FILTER = document.getElementById("male");
 const FEMALE_BUTTON_FILTER = document.getElementById("female");
 const YOUNGER_FILTER_BUTTON = document.getElementById("younger-ftr");
@@ -28,7 +27,7 @@ function initApp() {
 initApp();
 
 function getUsers() {
-  const url = `${REQUEST_URL}?results=${friendsList.count}`;
+  const url = `https://randomuser.me/api/1.3/?results=${friendsList.count}`;
 
   return fetch(url)
     .then((res) => {
@@ -67,11 +66,11 @@ function createUsersCards(users) {
 
 FILTERS_MENU.addEventListener("click", function ({ target }) {
   switch (target) {
-    case ABC_BUTTON_FILTER:
-      sortByIncreaseAlphabet();
+    case NAME_ASCEND_BUTTON_FILTER:
+      sortByAscendName();
       break;
-    case ZYX_BUTTON_FILTER:
-      sortByDecreaseAlphabet();
+    case NAME_DESCEND_BUTTON_FILTER:
+      sortByDescendName();
       break;
     case YOUNGER_FILTER_BUTTON:
       sortAscend();
@@ -91,7 +90,7 @@ FILTERS_MENU.addEventListener("click", function ({ target }) {
   }
 });
 
-function sortByIncreaseAlphabet() {
+function sortByAscendName() {
   const increaseSearch = ALL_USERS_CARDS_FILTERS.sort((a, b) => {
     if (a.name.first > b.name.first) {
       return 1;
@@ -106,7 +105,7 @@ function sortByIncreaseAlphabet() {
   createUsersCards(increaseSearch);
 }
 
-function sortByDecreaseAlphabet() {
+function sortByDescendName() {
   const decreaseSearch = ALL_USERS_CARDS_FILTERS.sort((a, b) => {
     if (a.name.first < b.name.first) {
       return 1;
@@ -174,3 +173,5 @@ function search(people) {
 function resetCards() {
   USERS_LIST.innerHTML = "";
 }
+
+// function sortWithAppliedFilters() {}
