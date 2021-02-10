@@ -59,7 +59,6 @@ function createUsersCards(users) {
 }
 
 FILTERS_MENU.addEventListener("click", function ({ target }) {
-  console.log(target.value);
   switch (target.value) {
     case "nameAscend":
       offChecked();

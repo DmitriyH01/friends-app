@@ -299,7 +299,6 @@ body {
 
   .container {
     width: 100%;
-    /* height: calc(100vh + 300px); */
     order: 2;
   }
 
@@ -326,19 +325,13 @@ body {
   }
 
   .list {
-    height: calc(100vh - 330px);
+    height: calc(100vh - 420px);
     grid-template-columns: repeat(2, 230px);
     padding-inline-start: 0px;
     margin-block-start: 0em;
   }
 
   .bottom {
-    height: 40px;
-  }
-
-  .bottom h2 {
-    font-size: 1em;
-    margin-block-start: 0em;
-    margin-block-end: 0em;
+    display: none;
   }
 }
