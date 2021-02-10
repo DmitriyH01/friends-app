@@ -4,16 +4,9 @@ const friendsList = {
   count: 72,
 };
 
-const ALL_USERS_CARDS_FILTERS = friendsList.changed;
 const ALL_USERS_CARDS = friendsList.current;
 const USERS_LIST = document.getElementById("usersList");
 const FILTERS_MENU = document.getElementById("filters_menu");
-const NAME_ASCEND_BUTTON_FILTER = document.getElementById("name-ascend");
-const NAME_DESCEND_BUTTON_FILTER = document.getElementById("name-descend");
-const MALE_BUTTON_FILTER = document.getElementById("male");
-const FEMALE_BUTTON_FILTER = document.getElementById("female");
-const YOUNGER_FILTER_BUTTON = document.getElementById("younger-ftr");
-const SENIOR_FILTER_BUTTON = document.getElementById("senior-ftr");
 const RESET_BUTTON = document.getElementById("reset");
 const SEARCH_INPUT = document.querySelector(".searcher");
 
@@ -44,7 +37,6 @@ function getUsers() {
 function saveUsers(users) {
   users.forEach(function (el) {
     ALL_USERS_CARDS.push(el);
-    ALL_USERS_CARDS_FILTERS.push(el);
   });
 }
 
@@ -65,33 +57,40 @@ function createUsersCards(users) {
 }
 
 FILTERS_MENU.addEventListener("click", function ({ target }) {
-  switch (target) {
-    case NAME_ASCEND_BUTTON_FILTER:
+  switch (target.value) {
+    case "nameAscend":
+      offChecked();
       sortByAscendName();
       break;
-    case NAME_DESCEND_BUTTON_FILTER:
+    case "nameDescend":
+      offChecked();
       sortByDescendName();
       break;
-    case YOUNGER_FILTER_BUTTON:
+    case "younger":
+      offChecked();
       sortAscend();
       break;
-    case SENIOR_FILTER_BUTTON:
+    case "senior":
+      offChecked();
       descendSort();
       break;
-    case MALE_BUTTON_FILTER:
+    case "male":
+      offChecked();
       sortByMale();
       break;
-    case FEMALE_BUTTON_FILTER:
+    case "female":
+      offChecked();
       sortByFemale();
       break;
-    case RESET_BUTTON:
+    case "reset":
+      offChecked();
       resetFilters();
       break;
   }
 });
 
 function sortByAscendName() {
-  const increaseSearch = ALL_USERS_CARDS_FILTERS.sort((a, b) => {
+  const increaseSearch = ALL_USERS_CARDS.sort((a, b) => {
     if (a.name.first > b.name.first) {
       return 1;
     }
@@ -106,7 +105,7 @@ function sortByAscendName() {
 }
 
 function sortByDescendName() {
-  const decreaseSearch = ALL_USERS_CARDS_FILTERS.sort((a, b) => {
+  const decreaseSearch = ALL_USERS_CARDS.sort((a, b) => {
     if (a.name.first < b.name.first) {
       return 1;
     }
@@ -120,7 +119,7 @@ function sortByDescendName() {
 }
 
 function sortAscend() {
-  const youngers = ALL_USERS_CARDS_FILTERS.sort(
+  const youngers = ALL_USERS_CARDS.sort(
     (a, b) => a.dob.age - b.dob.age
   );
   resetCards();
@@ -128,13 +127,13 @@ function sortAscend() {
 }
 
 function descendSort() {
-  const seniors = ALL_USERS_CARDS_FILTERS.sort((a, b) => b.dob.age - a.dob.age);
+  const seniors = ALL_USERS_CARDS.sort((a, b) => b.dob.age - a.dob.age);
   resetCards();
   createUsersCards(seniors);
 }
 
 function sortByMale() {
-  const filterMale = ALL_USERS_CARDS_FILTERS.filter(
+  const filterMale = ALL_USERS_CARDS.filter(
     (elem) => elem.gender === "male"
   );
   resetCards();
@@ -142,7 +141,7 @@ function sortByMale() {
 }
 
 function sortByFemale() {
-  const filterFemale = ALL_USERS_CARDS_FILTERS.filter(
+  const filterFemale = ALL_USERS_CARDS.filter(
     (elem) => elem.gender === "female"
   );
   resetCards();
@@ -155,7 +154,7 @@ function resetFilters() {
 }
 
 SEARCH_INPUT.addEventListener("keydown", () => {
-  search(ALL_USERS_CARDS_FILTERS);
+  search(ALL_USERS_CARDS);
 });
 
 function search(people) {
@@ -174,4 +173,9 @@ function resetCards() {
   USERS_LIST.innerHTML = "";
 }
 
-// function sortWithAppliedFilters() {}
+function offChecked() {
+  let allInputs = document.querySelectorAll(".sort_input");
+  allInputs.forEach((element) => {
+    element.checked = false;
+  });
+}

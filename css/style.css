@@ -82,7 +82,7 @@ body {
   background: linear-gradient(limegreen, transparent),
     linear-gradient(90deg, skyblue, transparent),
     linear-gradient(-90deg, coral, transparent);
-  color: rgb(255, 255, 255);
+  color: rgb(31, 16, 169);
 }
 
 .wrapper {
@@ -138,14 +138,27 @@ body {
   color: #f9f0da;
 }
 
-.sort_usersByAlphabet {
+.selection-box {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  align-content: center;
+}
+
+.selection-box input {
+  appearance: none;
+}
+
+.sort_input:checked + label {
+  border: 1.5px solid black;
+}
+
+.sort_input:focus + label {
+  border: 1.5px solid black;
 }
 
 .filter-btn {
   text-decoration: none;
   display: inline-block;
+  text-align: center;
   padding: 15px;
   margin: 5px;
   position: relative;
@@ -205,7 +218,6 @@ body {
 
 .selection-box {
   display: grid;
-  height: 200px;
   border-radius: 5px;
   margin: 5px;
 }
@@ -302,8 +314,6 @@ body {
 
   .selection-box {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.1em;
     height: auto;
   }
 
