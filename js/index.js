@@ -48,10 +48,11 @@ function createUsersCards(users) {
   users.forEach(function (el) {
     const card = document.createElement("li");
     card.classList.add("userCard");
-    card.innerHTML = `<span class="name">${el.name.first} ${el.name.last}</span>
-    <img src="${el.picture.large}">
-    <span class="age">Age: ${el.dob.age}</span>
-    <span class="location">Location: ${el.location.city}</span>`;
+    template = `<span class="name">${el.name.first} ${el.name.last}</span>
+     <img src="${el.picture.large}">
+     <span class="age">Age: ${el.dob.age}</span>
+     <span class="location">Location: ${el.location.city}</span>`;
+    card.insertAdjacentHTML("beforeEnd", template);
     lists.appendChild(card);
   });
 
