@@ -8,7 +8,6 @@ const ALL_USERS_CARDS_FILTERS = friendsList.changed;
 const ALL_USERS_CARDS = friendsList.current;
 const USERS_LIST = document.getElementById("usersList");
 const FILTERS_MENU = document.getElementById("filters_menu");
-let WHAT_FILTER_CHOSEN = "";
 const SEARCH_INPUT = document.querySelector(".searcher");
 
 function initApp() {
@@ -48,7 +47,7 @@ function createUsersCards(users) {
   users.forEach(function (el) {
     const card = document.createElement("li");
     card.classList.add("userCard");
-    template = `<span class="name">${el.name.first} ${el.name.last}</span>
+    let template = `<span class="name">${el.name.first} ${el.name.last}</span>
      <img src="${el.picture.large}">
      <span class="age">Age: ${el.dob.age}</span>
      <span class="location">Location: ${el.location.city}</span>`;
@@ -61,30 +60,29 @@ function createUsersCards(users) {
 
 FILTERS_MENU.addEventListener("click", function ({ target }) {
   if (target.nodeName === "INPUT") {
-    WHAT_FILTER_CHOSEN = target.value;
     switch (target.value) {
       case "nameAscend":
-        sortByName();
+        sortByName(target.value);
         offChecked();
         break;
       case "nameDescend":
-        sortByName();
+        sortByName(target.value);
         offChecked();
         break;
       case "younger":
-        sortByAge();
+        sortByAge(target.value);
         offChecked();
         break;
       case "senior":
-        sortByAge();
+        sortByAge(target.value);
         offChecked();
         break;
       case "male":
-        sortByGender();
+        sortByGender(target.value);
         offChecked();
         break;
       case "female":
-        sortByGender();
+        sortByGender(target.value);
         offChecked();
         break;
     }
@@ -94,7 +92,7 @@ FILTERS_MENU.addEventListener("click", function ({ target }) {
   }
 });
 
-function sortByName() {
+function sortByName(selectedFilter) {
   const nameSort = ALL_USERS_CARDS_FILTERS.slice();
   const runSorting = (a, b) => {
     if (a.name.first > b.name.first) {
@@ -105,7 +103,7 @@ function sortByName() {
     }
     return 0;
   };
-  if (WHAT_FILTER_CHOSEN === "nameAscend") {
+  if (selectedFilter === "nameAscend") {
     nameSort.sort(runSorting);
   } else {
     nameSort.sort((a, b) => runSorting(b, a));
@@ -114,10 +112,10 @@ function sortByName() {
   createUsersCards(nameSort);
 }
 
-function sortByAge() {
+function sortByAge(selectedFilter) {
   const ageSort = ALL_USERS_CARDS_FILTERS.slice();
   const runSorting = (a, b) => a.dob.age - b.dob.age;
-  if (WHAT_FILTER_CHOSEN === "younger") {
+  if (selectedFilter === "younger") {
     ageSort.sort(runSorting);
   } else {
     ageSort.sort((a, b) => runSorting(b, a));
@@ -126,9 +124,9 @@ function sortByAge() {
   createUsersCards(ageSort);
 }
 
-function sortByGender() {
+function sortByGender(selectedFilter) {
   let genderFilter = [];
-  if (WHAT_FILTER_CHOSEN === "male") {
+  if (selectedFilter === "male") {
     genderFilter = ALL_USERS_CARDS_FILTERS.filter(
       (elem) => elem.gender === "male"
     );
