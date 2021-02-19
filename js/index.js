@@ -1,32 +1,18 @@
-const friendsList = {
-  current: [],
-  changed: [],
-  count: 72,
-};
-
-const ALL_USERS_CARDS_FILTERS = friendsList.changed;
-const ALL_USERS_CARDS = friendsList.current;
-const USERS_LIST = document.getElementById("usersList");
-const FILTERS_MENU = document.getElementById("filters_menu");
-const SEARCH_INPUT = document.querySelector(".searcher");
-
-function initApp() {
-  getUsers().then((users) => {
-    saveUsers(users);
-    createUsersCards(ALL_USERS_CARDS);
-  });
-}
-
-initApp();
+const allSavedUsers = [];
+const countUsers = 72;
+const usersBox = document.getElementById("usersList");
+const allFilters = document.getElementById("filters_menu");
+const searchInput = document.querySelector(".searcher");
 
 function getUsers() {
-  const url = `https://randomuser.me/api/1.3/?results=${friendsList.count}`;
+  const url = `https://randomuser.me/api/1.3/?results=${countUsers}`;
 
   return fetch(url)
     .then((res) => {
       if (res.ok) {
         return res.json();
       }
+      throw new Error(res.statusText);
     })
     .then((data) => data.results)
     .catch((err) => {
@@ -34,15 +20,23 @@ function getUsers() {
     });
 }
 
+function initApp() {
+  getUsers().then((users) => {
+    saveUsers(users);
+    createUsersCards(allSavedUsers);
+  });
+}
+
+initApp();
+
 function saveUsers(users) {
   users.forEach(function (el) {
-    ALL_USERS_CARDS.push(el);
-    ALL_USERS_CARDS_FILTERS.push(el);
+    allSavedUsers.push(el);
   });
 }
 
 function createUsersCards(users) {
-  const lists = document.createDocumentFragment();
+  const listsFragment = document.createDocumentFragment();
 
   users.forEach(function (el) {
     const card = document.createElement("li");
@@ -52,48 +46,56 @@ function createUsersCards(users) {
      <span class="age">Age: ${el.dob.age}</span>
      <span class="location">Location: ${el.location.city}</span>`;
     card.insertAdjacentHTML("beforeEnd", template);
-    lists.append(card);
+    listsFragment.append(card);
   });
 
-  USERS_LIST.appendChild(lists);
+  usersBox.appendChild(listsFragment);
 }
 
-FILTERS_MENU.addEventListener("click", function ({ target }) {
-  if (target.nodeName === "INPUT") {
-    switch (target.value) {
-      case "nameAscend":
-        sortByName(target.value);
-        offChecked();
-        break;
-      case "nameDescend":
-        sortByName(target.value);
-        offChecked();
-        break;
-      case "younger":
-        sortByAge(target.value);
-        offChecked();
-        break;
-      case "senior":
-        sortByAge(target.value);
-        offChecked();
-        break;
-      case "male":
-        sortByGender(target.value);
-        offChecked();
-        break;
-      case "female":
-        sortByGender(target.value);
-        offChecked();
-        break;
-    }
-  }
+allFilters.addEventListener("click", function ({ target }) {
+  let filteredUsers = null;
+
   if (target.value === "reset") {
     resetFilters();
+    return;
   }
+
+  if (target.nodeName !== "INPUT") {
+    return;
+  }
+
+  if (target.name === "search") {
+    return;
+  }
+
+  switch (target.value) {
+    case "nameAscend":
+      filteredUsers = sortByName(allSavedUsers, "nameAscend");
+      break;
+    case "nameDescend":
+      filteredUsers = sortByName(allSavedUsers, "nameDescend");
+      break;
+    case "younger":
+      filteredUsers = sortByAge(allSavedUsers, "younger");
+      break;
+    case "senior":
+      filteredUsers = sortByAge(allSavedUsers, "senior");
+      break;
+    case "male":
+      filteredUsers = sortByGender(allSavedUsers, "male");
+      break;
+    case "female":
+      filteredUsers = sortByGender(allSavedUsers, "female");
+      break;
+  }
+
+  cleanSelectedInputs();
+  deleteAllShowedUsers();
+  createUsersCards(filteredUsers);
 });
 
-function sortByName(selectedFilter) {
-  const nameSort = ALL_USERS_CARDS_FILTERS.slice();
+function sortByName(list, sort) {
+  const result = [...list];
   const runSorting = (a, b) => {
     if (a.name.first > b.name.first) {
       return 1;
@@ -103,70 +105,62 @@ function sortByName(selectedFilter) {
     }
     return 0;
   };
-  if (selectedFilter === "nameAscend") {
-    nameSort.sort(runSorting);
-  } else {
-    nameSort.sort((a, b) => runSorting(b, a));
+  if (sort === "nameAscend") {
+    result.sort(runSorting);
+  } else if (sort === "nameDescend") {
+    result.sort((a, b) => runSorting(b, a));
   }
-  resetCards();
-  createUsersCards(nameSort);
+
+  return result;
 }
 
-function sortByAge(selectedFilter) {
-  const ageSort = ALL_USERS_CARDS_FILTERS.slice();
+function sortByAge(list, sort) {
+  const result = [...list];
   const runSorting = (a, b) => a.dob.age - b.dob.age;
-  if (selectedFilter === "younger") {
-    ageSort.sort(runSorting);
-  } else {
-    ageSort.sort((a, b) => runSorting(b, a));
+  if (sort === "younger") {
+    result.sort(runSorting);
+  } else if (sort === "senior") {
+    result.sort((a, b) => runSorting(b, a));
   }
-  resetCards();
-  createUsersCards(ageSort);
+  return result;
 }
 
-function sortByGender(selectedFilter) {
-  let genderFilter = [];
-  if (selectedFilter === "male") {
-    genderFilter = ALL_USERS_CARDS_FILTERS.filter(
-      (elem) => elem.gender === "male"
-    );
-  } else {
-    genderFilter = ALL_USERS_CARDS_FILTERS.filter(
-      (elem) => elem.gender === "female"
-    );
-  }
-  resetCards();
-  createUsersCards(genderFilter);
+function sortByGender(list, gender) {
+  let genderFilter = [...list];
+  genderFilter = allSavedUsers.filter((elem) => elem.gender === gender);
+  return genderFilter;
 }
 
 function resetFilters() {
-  resetCards();
-  createUsersCards(ALL_USERS_CARDS);
+  deleteAllShowedUsers();
+  createUsersCards(allSavedUsers);
 }
-
-SEARCH_INPUT.addEventListener("keydown", () => {
-  search(ALL_USERS_CARDS_FILTERS);
+searchInput.addEventListener("keydown", () => {
+  if (searchInput.value === "") {
+    return;
+  }
+  deleteAllShowedUsers();
+  const featuredUsers = search(allSavedUsers);
+  createUsersCards(featuredUsers);
 });
 
 function search(people) {
-  resetCards();
-  const search = SEARCH_INPUT.value.toLowerCase();
+  const search = searchInput.value.toLowerCase();
 
-  const newPeople = people.filter(
+  const peopleSearch = people.filter(
     (elem) =>
       elem.name.first.toLowerCase().match(search) ||
       elem.name.last.toLowerCase().match(search)
   );
-  createUsersCards(newPeople);
+  return peopleSearch;
 }
 
-function resetCards() {
-  USERS_LIST.innerHTML = "";
+function deleteAllShowedUsers() {
+  usersBox.innerHTML = "";
 }
 
-function offChecked() {
-  WHAT_FILTER_CHOISEN = "";
-  let allInputs = document.querySelectorAll(".sort_input");
+function cleanSelectedInputs() {
+  const allInputs = document.querySelectorAll(".sort_input");
   allInputs.forEach((element) => {
     element.checked = false;
   });
