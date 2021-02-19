@@ -94,7 +94,7 @@ allFilters.addEventListener("click", function ({ target }) {
   createUsersCards(filteredUsers);
 });
 
-function sortByName(list, revers) {
+function sortByName(list, isRevers) {
   const result = [...list];
   const runSorting = (a, b) => {
     if (a.name.first > b.name.first) {
@@ -105,21 +105,14 @@ function sortByName(list, revers) {
     }
     return 0;
   };
-
-  revers === true
-    ? result.sort((a, b) => runSorting(b, a))
-    : result.sort(runSorting);
-
+  result.sort((a, b) => (isRevers ? runSorting(b, a) : runSorting(a, b)));
   return result;
 }
 
-function sortByAge(list, revers) {
+function sortByAge(list, isRevers) {
   const result = [...list];
   const runSorting = (a, b) => a.dob.age - b.dob.age;
-  revers === true
-    ? result.sort((a, b) => runSorting(b, a))
-    : result.sort(runSorting);
-
+  result.sort((a, b) => (isRevers ? runSorting(b, a) : runSorting(a, b)));
   return result;
 }
 
