@@ -70,16 +70,16 @@ allFilters.addEventListener("click", function ({ target }) {
 
   switch (target.value) {
     case "nameAscend":
-      filteredUsers = sortByName(allSavedUsers, "nameAscend");
+      filteredUsers = sortByName(allSavedUsers);
       break;
     case "nameDescend":
-      filteredUsers = sortByName(allSavedUsers, "nameDescend");
+      filteredUsers = sortByName(allSavedUsers, true);
       break;
     case "younger":
-      filteredUsers = sortByAge(allSavedUsers, "younger");
+      filteredUsers = sortByAge(allSavedUsers);
       break;
     case "senior":
-      filteredUsers = sortByAge(allSavedUsers, "senior");
+      filteredUsers = sortByAge(allSavedUsers, true);
       break;
     case "male":
       filteredUsers = sortByGender(allSavedUsers, "male");
@@ -94,7 +94,7 @@ allFilters.addEventListener("click", function ({ target }) {
   createUsersCards(filteredUsers);
 });
 
-function sortByName(list, sort) {
+function sortByName(list, revers) {
   const result = [...list];
   const runSorting = (a, b) => {
     if (a.name.first > b.name.first) {
@@ -105,23 +105,21 @@ function sortByName(list, sort) {
     }
     return 0;
   };
-  if (sort === "nameAscend") {
-    result.sort(runSorting);
-  } else if (sort === "nameDescend") {
-    result.sort((a, b) => runSorting(b, a));
-  }
+
+  revers === true
+    ? result.sort((a, b) => runSorting(b, a))
+    : result.sort(runSorting);
 
   return result;
 }
 
-function sortByAge(list, sort) {
+function sortByAge(list, revers) {
   const result = [...list];
   const runSorting = (a, b) => a.dob.age - b.dob.age;
-  if (sort === "younger") {
-    result.sort(runSorting);
-  } else if (sort === "senior") {
-    result.sort((a, b) => runSorting(b, a));
-  }
+  revers === true
+    ? result.sort((a, b) => runSorting(b, a))
+    : result.sort(runSorting);
+
   return result;
 }
 
