@@ -52,15 +52,11 @@ function createUsersCards(users) {
   usersBox.appendChild(listsFragment);
 }
 
-allFilters.addEventListener("click", function ({ target }) {
+allFilters.addEventListener("change", function ({ target }) {
   let filteredUsers = null;
 
   if (target.value === "reset") {
     resetFilters();
-    return;
-  }
-
-  if (target.nodeName !== "INPUT") {
     return;
   }
 
@@ -70,22 +66,22 @@ allFilters.addEventListener("click", function ({ target }) {
 
   switch (target.value) {
     case "nameAscend":
-      filteredUsers = sortByName(allSavedUsers);
+      filteredUsers = nameSorters[target.value](allSavedUsers);
       break;
     case "nameDescend":
-      filteredUsers = sortByName(allSavedUsers, true);
+      filteredUsers = nameSorters[target.value](allSavedUsers);
       break;
     case "younger":
-      filteredUsers = sortByAge(allSavedUsers);
+      filteredUsers = ageSorters[target.value](allSavedUsers);
       break;
     case "senior":
-      filteredUsers = sortByAge(allSavedUsers, true);
+      filteredUsers = ageSorters[target.value](allSavedUsers);
       break;
     case "male":
-      filteredUsers = sortByGender(allSavedUsers, "male");
+      filteredUsers = sortByGender(target.value, allSavedUsers);
       break;
     case "female":
-      filteredUsers = sortByGender(allSavedUsers, "female");
+      filteredUsers = sortByGender(target.value, allSavedUsers);
       break;
   }
 
@@ -94,34 +90,31 @@ allFilters.addEventListener("click", function ({ target }) {
   createUsersCards(filteredUsers);
 });
 
-function sortByName(list, isRevers) {
-  const result = [...list];
-  const runSorting = (a, b) => {
-    if (a.name.first > b.name.first) {
-      return 1;
-    }
-    if (a.name.first < b.name.first) {
-      return -1;
-    }
-    return 0;
-  };
-  result.sort((a, b) => (isRevers ? runSorting(b, a) : runSorting(a, b)));
-  return result;
-}
+const compareName = (firstUsers, secondUsers) => {
+  if (firstUsers.name.first > secondUsers.name.first) {
+    return 1;
+  }
+  if (firstUsers.name.first < secondUsers.name.first) {
+    return -1;
+  }
+  return 0;
+};
 
-function sortByAge(list, isRevers) {
-  const result = [...list];
-  const runSorting = (a, b) => a.dob.age - b.dob.age;
-  result.sort((a, b) => (isRevers ? runSorting(b, a) : runSorting(a, b)));
-  return result;
-}
+const compareAge = (firstUsers, secondUsers) =>
+  firstUsers.dob.age - secondUsers.dob.age;
 
-function sortByGender(list, gender) {
-  let genderFilter = [...list];
-  genderFilter = allSavedUsers.filter((elem) => elem.gender === gender);
-  return genderFilter;
-}
+const nameSorters = {
+  nameAscend: (users) => users.sort(compareName),
+  nameDescend: (users) => users.sort((a, b) => compareName(b, a)),
+};
 
+const ageSorters = {
+  younger: (users) => users.sort(compareAge),
+  senior: (users) => users.sort((a, b) => compareAge(b, a)),
+};
+
+const sortByGender = (gender, users) =>
+  users.filter((elem) => elem.gender === gender);
 function resetFilters() {
   deleteAllShowedUsers();
   createUsersCards(allSavedUsers);
@@ -152,7 +145,5 @@ function deleteAllShowedUsers() {
 
 function cleanSelectedInputs() {
   const allInputs = document.querySelectorAll(".sort_input");
-  allInputs.forEach((element) => {
-    element.checked = false;
-  });
+  allInputs.forEach((element) => (element.checked = false));
 }
