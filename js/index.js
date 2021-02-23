@@ -1,4 +1,7 @@
-const allSavedUsers = [];
+const allSavedUsers = {
+  current: [],
+  changed: [],
+};
 const countUsers = 72;
 const usersBox = document.getElementById("usersList");
 const allFilters = document.getElementById("filters_menu");
@@ -23,7 +26,7 @@ function getUsers() {
 function initApp() {
   getUsers().then((users) => {
     saveUsers(users);
-    createUsersCards(allSavedUsers);
+    createUsersCards(allSavedUsers.changed);
   });
 }
 
@@ -31,7 +34,8 @@ initApp();
 
 function saveUsers(users) {
   users.forEach(function (el) {
-    allSavedUsers.push(el);
+    allSavedUsers.current.push(el);
+    allSavedUsers.changed.push(el);
   });
 }
 
@@ -64,33 +68,20 @@ allFilters.addEventListener("change", function ({ target }) {
     return;
   }
 
-  switch (target.value) {
-    case "nameAscend":
-      filteredUsers = nameSorters[target.value](allSavedUsers);
-      break;
-    case "nameDescend":
-      filteredUsers = nameSorters[target.value](allSavedUsers);
-      break;
-    case "younger":
-      filteredUsers = ageSorters[target.value](allSavedUsers);
-      break;
-    case "senior":
-      filteredUsers = ageSorters[target.value](allSavedUsers);
-      break;
-    case "male":
-      filteredUsers = sortByGender(target.value, allSavedUsers);
-      break;
-    case "female":
-      filteredUsers = sortByGender(target.value, allSavedUsers);
-      break;
-  }
+  const sortedCases = {
+    sort_by_alphabet: (users) => nameSorters[target.value](users),
+    sort_by_age: (users) => ageSorters[target.value](users),
+    sort_by_gender: (users) => sortByGender(target.value, users),
+  };
+
+  filteredUsers = sortedCases[target.name](allSavedUsers.changed);
 
   cleanSelectedInputs();
   deleteAllShowedUsers();
   createUsersCards(filteredUsers);
 });
 
-const compareName = (firstUsers, secondUsers) => {
+const compareNames = (firstUsers, secondUsers) => {
   if (firstUsers.name.first > secondUsers.name.first) {
     return 1;
   }
@@ -104,8 +95,8 @@ const compareAge = (firstUsers, secondUsers) =>
   firstUsers.dob.age - secondUsers.dob.age;
 
 const nameSorters = {
-  nameAscend: (users) => users.sort(compareName),
-  nameDescend: (users) => users.sort((a, b) => compareName(b, a)),
+  nameAscend: (users) => users.sort(compareNames),
+  nameDescend: (users) => users.sort((a, b) => compareNames(b, a)),
 };
 
 const ageSorters = {
@@ -115,28 +106,25 @@ const ageSorters = {
 
 const sortByGender = (gender, users) =>
   users.filter((elem) => elem.gender === gender);
+
 function resetFilters() {
   deleteAllShowedUsers();
-  createUsersCards(allSavedUsers);
+  createUsersCards(allSavedUsers.current);
 }
 searchInput.addEventListener("keydown", () => {
-  if (searchInput.value === "") {
-    return;
-  }
   deleteAllShowedUsers();
-  const featuredUsers = search(allSavedUsers);
+  const featuredUsers = seekNames(allSavedUsers.changed);
   createUsersCards(featuredUsers);
 });
 
-function search(people) {
+function seekNames(people) {
   const search = searchInput.value.toLowerCase();
 
-  const peopleSearch = people.filter(
+  return people.filter(
     (elem) =>
       elem.name.first.toLowerCase().match(search) ||
       elem.name.last.toLowerCase().match(search)
   );
-  return peopleSearch;
 }
 
 function deleteAllShowedUsers() {
