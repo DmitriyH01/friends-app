@@ -22,7 +22,7 @@
       </div>
 
       <aside class="sidebar">
-        <ul id="filters_menu" class="filters_list">
+        <div id="search_wrapper" class="filters_list">
           <li class="search">
             <input
               type="text"
@@ -31,12 +31,14 @@
               placeholder="Find..."
             />
           </li>
+        </div>
+        <ul id="filters_menu" class="filters_list">
           <li class="selection-box">
             <input
               type="radio"
               id="name_ascend"
               value="nameAscend"
-              name="sort_by_alphabet"
+              name="sortByAlphabet"
               class="sort_input"
             />
             <label for="name_ascend" class="filter-btn">Asc</label>
@@ -44,7 +46,7 @@
               type="radio"
               id="name_descend"
               value="nameDescend"
-              name="sort_by_alphabet"
+              name="sortByAlphabet"
               class="sort_input"
             />
             <label for="name_descend" class="filter-btn">Dsc</label>
@@ -55,7 +57,7 @@
               type="radio"
               id="male"
               value="male"
-              name="sort_by_gender"
+              name="sortByGender"
               class="sort_input"
             />
             <label for="male" class="filter-btn">Male</label>
@@ -63,7 +65,7 @@
               type="radio"
               id="female"
               value="female"
-              name="sort_by_gender"
+              name="sortByGender"
               class="sort_input"
             />
             <label for="female" class="filter-btn">Female</label>
@@ -74,7 +76,7 @@
               type="radio"
               id="younger"
               value="younger"
-              name="sort_by_age"
+              name="sortByAge"
               class="sort_input"
             />
             <label for="younger" class="filter-btn">Youngest</label>
@@ -82,7 +84,7 @@
               type="radio"
               id="senior"
               value="senior"
-              name="sort_by_age"
+              name="sortByAge"
               class="sort_input"
             />
             <label for="senior" class="filter-btn">Oldgest</label>

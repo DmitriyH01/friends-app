@@ -5,6 +5,7 @@ const allSavedUsers = {
 const countUsers = 72;
 const usersBox = document.getElementById("usersList");
 const allFilters = document.getElementById("filters_menu");
+const searchWrapper = document.getElementById("search_wrapper");
 const searchInput = document.querySelector(".searcher");
 
 function getUsers() {
@@ -57,21 +58,17 @@ function createUsersCards(users) {
 }
 
 allFilters.addEventListener("change", function ({ target }) {
-  let filteredUsers = null;
-
   if (target.value === "reset") {
     resetFilters();
     return;
   }
 
-  if (target.name === "search") {
-    return;
-  }
+  let filteredUsers = null;
 
   const sortedCases = {
-    sort_by_alphabet: (users) => nameSorters[target.value](users),
-    sort_by_age: (users) => ageSorters[target.value](users),
-    sort_by_gender: (users) => sortByGender(target.value, users),
+    sortByAlphabet: (users) => nameSorters[target.value](users),
+    sortByAge: (users) => ageSorters[target.value](users),
+    sortByGender: (users) => sortByGender(target.value, users),
   };
 
   filteredUsers = sortedCases[target.name](allSavedUsers.changed);
@@ -111,13 +108,13 @@ function resetFilters() {
   deleteAllShowedUsers();
   createUsersCards(allSavedUsers.current);
 }
-searchInput.addEventListener("keydown", () => {
+searchWrapper.addEventListener("keydown", () => {
   deleteAllShowedUsers();
-  const featuredUsers = seekNames(allSavedUsers.changed);
+  const featuredUsers = findByName(allSavedUsers.changed);
   createUsersCards(featuredUsers);
 });
 
-function seekNames(people) {
+function findByName(people) {
   const search = searchInput.value.toLowerCase();
 
   return people.filter(
