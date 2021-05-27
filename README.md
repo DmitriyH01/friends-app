@@ -17,4 +17,4 @@ I mastered :
 - fetch API
 - @media
 ---
-### [DEMO] : https://dmitriyh01.github.io/friends-app/
+## [Demo](https://dmitriyh01.github.io/friends-app/)
